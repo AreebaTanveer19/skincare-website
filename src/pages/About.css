@@ -1,0 +1,65 @@
+
+#about {
+  background-color: #f8f6f2;
+  padding: 7.5rem 1.5rem 4rem; /* slightly less than before */
+  scroll-margin-top: 100px;  
+}
+
+#about h2,
+#about h3 {
+  font-family: 'Playfair Display', serif;
+  color: #2d2d2d;
+}
+
+#about p {
+  color: #6b6b6b;
+  line-height: 1.7;
+}
+
+#about .text-center {
+  text-align: center;
+}
+
+#about .gradient-box {
+  background: linear-gradient(to right, #fff8ec, #f0e8dc);
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.03);
+  margin-top: 3rem;
+}
+
+#about .core-values {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  text-align: center;
+}
+
+#about .core-values h4 {
+  margin-top: 1rem;
+  color: #2d2d2d;
+  font-weight: 600;
+}
+
+#about .core-values p {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+#about .cta-btn {
+  margin-top: 2.5rem;
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  color: white;
+  border-radius: 9999px;
+  background: linear-gradient(to right, #d4af37, #b76e79);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#about .cta-btn:hover {
+  transform: scale(1.05);
+}
