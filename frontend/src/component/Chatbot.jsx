@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import chatbotAPI from '../api/chatbotApi';
 import './Chatbot.css';
 
 export default function Chatbot() {
@@ -12,6 +13,8 @@ export default function Chatbot() {
     }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentProduct, setCurrentProduct] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -29,8 +32,8 @@ export default function Chatbot() {
     }
   }, [isOpen]);
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
 
     const userMessage = {
       id: Date.now(),
@@ -40,7 +43,54 @@ export default function Chatbot() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const messageToSend = inputValue;
     setInputValue('');
+    setIsLoading(true);
+
+    try {
+      const response = await chatbotAPI.sendMessage(messageToSend);
+      
+      if (response.success) {
+        const botMessage = {
+          id: Date.now() + 1,
+          text: response.data.message,
+          sender: 'bot',
+          timestamp: new Date(),
+          product: response.data.product || null
+        };
+
+        setMessages(prev => [...prev, botMessage]);
+        
+        // If there's a product in the response, set it for display
+        if (response.data.product) {
+          setCurrentProduct(response.data.product);
+        } else {
+          setCurrentProduct(null);
+        }
+      } else {
+        // Handle error
+        const errorMessage = {
+          id: Date.now() + 1,
+          text: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
+          sender: 'bot',
+          timestamp: new Date(),
+          isError: true
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage = {
+        id: Date.now() + 1,
+        text: "Sorry, something went wrong. Please try again.",
+        sender: 'bot',
+        timestamp: new Date(),
+        isError: true
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -52,6 +102,11 @@ export default function Chatbot() {
 
   const formatTime = (timestamp) => {
     return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  // Function to render HTML content safely
+  const renderHTML = (htmlContent) => {
+    return { __html: htmlContent };
   };
 
   return (
@@ -81,11 +136,51 @@ export default function Chatbot() {
               {messages.map((message) => (
                 <div key={message.id} className={`message ${message.sender}`}>
                   <div className="message-content">
-                    <p>{message.text}</p>
+                    <div 
+                      className="message-text"
+                      dangerouslySetInnerHTML={renderHTML(message.text)}
+                    />
+                    {/* Merged product info inside the message bubble */}
+                    {message.product && (
+                      <div className="merged-product-info">
+                        <img
+                          className="merged-product-image"
+                          src={`/images/${message.product.image_key}`}
+                          alt={message.product.name}
+                          onError={e => { e.target.style.display = 'none'; }}
+                        />
+                        
+                        <div className="merged-product-details">
+                          <div className="merged-product-title">
+                            <b>{message.product.name}</b> <span className="merged-product-price">${message.product.price}</span>
+                          </div>
+                          <div className="merged-product-desc">{message.product.desc}</div>
+                          <button
+                            className="product-button"
+                            onClick={() => window.open(message.product.product_link || '#', '_blank')}
+                          >
+                            View Product
+                          </button>
+                        </div>
+                      </div>
+                    )}
                     <span className="message-time">{formatTime(message.timestamp)}</span>
                   </div>
                 </div>
               ))}
+
+              {/* Loading indicator */}
+              {isLoading && (
+                <div className="message bot">
+                  <div className="message-content">
+                    <div className="typing-indicator">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div ref={messagesEndRef} />
             </div>
@@ -101,10 +196,11 @@ export default function Chatbot() {
                   placeholder="Ask about skincare, products, or routines..."
                   className="chat-input"
                   rows="1"
+                  disabled={isLoading}
                 />
                 <button 
                   onClick={handleSendMessage}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || isLoading}
                   className="send-button"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
