@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Auth from "./pages/Auth";
 import AdminDashboard from './pages/AdminDashboard';
 import ScrollToTop from './pages/ScrollToTop';
+import Chatbot from "./component/Chatbot";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -30,11 +31,11 @@ function App() {
       <ScrollToTop />
       
       <Routes>
-        <Route path="/" element={<><Navbar /><Home /></>} />
-        <Route path="/home" element={<><Navbar /><Home /></>} />
-        <Route path="/product" element={<><Navbar /><Products addToCart={addToCart} /></>} />
-        <Route path="/checkout" element={<><Navbar /><Checkout cartItems={cartItems} setCartItems={setCartItems} /></>} />
-        <Route path="/about" element={<><Navbar /><About /></>} />
+        <Route path="/" element={<><Navbar /><Home /><Chatbot /></>} />
+        <Route path="/home" element={<><Navbar /><Home /><Chatbot /></>} />
+        <Route path="/product" element={<><Navbar /><Products addToCart={addToCart} /><Chatbot /></>} />
+        <Route path="/checkout" element={<><Navbar /><Checkout cartItems={cartItems} setCartItems={setCartItems} /><Chatbot /></>} />
+        <Route path="/about" element={<><Navbar /><About /><Chatbot /></>} />
         <Route path="/auth" element={<><Navbar /><Auth /></>} />
         <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
