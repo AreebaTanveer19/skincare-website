@@ -1,0 +1,127 @@
+:root {
+    --soft-grey: #f8f6f2;
+    --ivory: #fffef9;
+    --botanical-green: #b7c6b0;
+    --gold: #d4af37;
+    --rose-gold: #b76e79;
+    --text-dark: #2d2d2d;
+    --shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--soft-grey);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  
+  /* Auth Card */
+  .auth-card {
+    background: #ffffff;
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--shadow);
+    max-width: 28rem;
+    width: 100%;
+  }
+  
+  /* Headings */
+  .auth-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+  }
+  
+  .auth-card p {
+    font-size: 0.95rem;
+    color: #6b6b6b;
+    text-align: center;
+  }
+  
+  /* Input Fields */
+  .auth-card input {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    padding: 0.9rem 0.5rem 0.7rem 0.5rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 0.75rem;
+    background: var(--ivory);
+    color: var(--text-dark);
+    width: 100%;
+    transition: border 0.2s;
+    margin-bottom: 1rem;
+  }
+  
+  .auth-card input:focus {
+    outline: none;
+    border: 1.5px solid var(--botanical-green);
+  }
+  
+  /* Password Icon Button */
+  .auth-card .password-toggle {
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  /* Error Message */
+  .auth-card .error-message {
+    font-size: 0.85rem;
+    color: #e74c3c;
+    margin-top: 0.25rem;
+  }
+  
+  /* Submit Button */
+  .auth-card .submit-btn {
+    background: linear-gradient(90deg, var(--gold), var(--rose-gold));
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.85rem 2rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow);
+    width: 100%;
+  }
+  
+  .auth-card .submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.15);
+  }
+  
+  /* Toggle Button */
+  .auth-card .toggle-form {
+    font-size: 0.9rem;
+    color: #6b6b6b;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .auth-card .toggle-form button {
+    background: none;
+    border: none;
+    color: var(--rose-gold);
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 0.3rem;
+    transition: text-decoration 0.2s;
+  }
+  
+  .auth-card .toggle-form button:hover {
+    text-decoration: underline;
+  }
+  
