@@ -26,7 +26,7 @@ export default function Product({ addToCart }) {
   const fetchProductsByCategory = async (category) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/products/category/${category}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/products/category/${category}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch ${category} products`);
       }

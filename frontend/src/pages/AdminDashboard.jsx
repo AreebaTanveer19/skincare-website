@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AdminDashboard.css';
 import AdminLogin from './AdminLogin';
 
-const API = 'http://localhost:5000/api';
+const API = import.meta.env.VITE_API_URL;
 
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);

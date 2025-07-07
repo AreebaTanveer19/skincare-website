@@ -72,7 +72,7 @@ export default function Checkout({ cartItems, setCartItems }) {
     };
 
     // Send order to backend
-    fetch('http://localhost:5000/api/orders', {
+    fetch(`${import.meta.env.VITE_API_URL}/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order)
