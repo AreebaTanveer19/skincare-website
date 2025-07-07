@@ -72,6 +72,17 @@ export default function Product({ addToCart }) {
     }, 1000);
   };
 
+  useEffect(() => {
+    if (!loading && !error && products.length > 0) {
+      const productId = getQueryParam('productId', location.search);
+      if (productId) {
+        const found = products.find(p => p._id === productId);
+        if (found) setModalProduct(found);
+      }
+    }
+    // eslint-disable-next-line
+  }, [loading, error, products, location.search]);
+
   return (
     <div className="products-page">
       <h1 className="products-title">Our Skincare Collection</h1>

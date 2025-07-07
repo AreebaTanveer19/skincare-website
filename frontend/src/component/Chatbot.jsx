@@ -14,7 +14,6 @@ export default function Chatbot() {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -60,13 +59,6 @@ export default function Chatbot() {
         };
 
         setMessages(prev => [...prev, botMessage]);
-        
-        // If there's a product in the response, set it for display
-        if (response.data.product) {
-          setCurrentProduct(response.data.product);
-        } else {
-          setCurrentProduct(null);
-        }
       } else {
         // Handle error
         const errorMessage = {
@@ -155,12 +147,6 @@ export default function Chatbot() {
                             <b>{message.product.name}</b> <span className="merged-product-price">${message.product.price}</span>
                           </div>
                           <div className="merged-product-desc">{message.product.desc}</div>
-                          <button
-                            className="product-button"
-                            onClick={() => window.open(message.product.product_link || '#', '_blank')}
-                          >
-                            View Product
-                          </button>
                         </div>
                       </div>
                     )}
