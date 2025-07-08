@@ -125,3 +125,30 @@
     text-decoration: underline;
   }
   
+  /* Remember Me and Forgot Password */
+  .auth-card .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.97rem;
+    color: var(--text-dark);
+    margin-right: auto;
+    margin-bottom: 0.5rem;
+    padding-left: 0;
+  }
+  .auth-card .remember-me input[type="checkbox"] {
+    accent-color: var(--botanical-green);
+    margin: 0 0.4em 0 0;
+    width: 1.1em;
+    height: 1.1em;
+  }
+  
+  @media (max-width: 600px) {
+    .auth-card .remember-me {
+      justify-content: flex-start;
+      font-size: 0.95rem;
+      margin-bottom: 0.7rem;
+      padding-left: 0.1em;
+    }
+  }
+  

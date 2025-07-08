@@ -34,7 +34,7 @@ function App() {
         <Route path="/" element={<><Navbar /><Home /><Chatbot /></>} />
         <Route path="/home" element={<><Navbar /><Home /><Chatbot /></>} />
         <Route path="/product" element={<><Navbar /><Products addToCart={addToCart} /><Chatbot /></>} />
-        <Route path="/checkout" element={<><Navbar /><Checkout cartItems={cartItems} setCartItems={setCartItems} /><Chatbot /></>} />
+        <Route path="/checkout" element={<><Navbar /><Checkout cartItems={cartItems} setCartItems={setCartItems} /></>} />
         <Route path="/about" element={<><Navbar /><About /><Chatbot /></>} />
         <Route path="/auth" element={<><Navbar /><Auth /></>} />
         <Route path="/admin" element={<AdminDashboard />} />
