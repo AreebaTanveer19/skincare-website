@@ -10,6 +10,13 @@ function getQueryParam(name, search) {
 
 const categories = ['Serums', 'Creams', 'Cleansers'];
 
+// Helper to get correct image URL for GitHub Pages
+const getImageUrl = (img) => {
+  if (!img) return '';
+  const fileName = img.split('/').pop();
+  return `${import.meta.env.BASE_URL}images/${fileName}`;
+};
+
 export default function Product({ addToCart }) {
   const location = useLocation();
   const initialCategory = getQueryParam('category', location.search);
@@ -131,7 +138,7 @@ export default function Product({ addToCart }) {
                 transition={{ duration: 0.4 }}
                 onClick={() => setModalProduct(product)}
               >
-                <img src={product.image.startsWith('/images/') ? product.image : `/images/${product.image.split('/').pop()}`}
+                <img src={getImageUrl(product.image)}
                      alt={product.name}
                      className="product-image" />
                 <h2>{product.name}</h2>
@@ -148,7 +155,7 @@ export default function Product({ addToCart }) {
           <motion.div className="product-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.div className="product-modal" initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 80, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 30 }}>
               <button className="modal-close" onClick={() => setModalProduct(null)}>&times;</button>
-              <img src={modalProduct.image} alt={modalProduct.name} />
+              <img src={getImageUrl(modalProduct.image)} alt={modalProduct.name} />
               <h2>{modalProduct.name}</h2>
               <span className="modal-price">${modalProduct.price}</span>
               <p className="modal-desc">{modalProduct.desc}</p>

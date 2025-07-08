@@ -99,6 +99,16 @@ export default function AdminDashboard() {
     fetchOrders();
   };
 
+  // Add this function inside the AdminDashboard component, after handleDelete
+  const handleDeleteOrder = async id => {
+    if (!window.confirm('Delete this order?')) return;
+    await fetch(`${API}/orders/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    fetchOrders();
+  };
+
   if (!checked) return null;
   if (forceLogin) return <AdminLogin onLogin={() => { setIsAdmin(true); setForceLogin(false); }} />;
   if (!isAdmin) return (
@@ -169,7 +179,7 @@ export default function AdminDashboard() {
                     <td>${p.price}</td>
                     <td>{p.category}</td>
                     <td>
-                      <button onClick={() => handleEdit(p)}>Edit</button>
+                      <button onClick={() => handleEdit(p)} style={{ marginRight: '0.5rem' }}>Edit</button>
                       <button onClick={() => handleDelete(p._id)} className="danger">Delete</button>
                     </td>
                   </tr>
@@ -240,7 +250,7 @@ export default function AdminDashboard() {
                     </td>
                     <td>{new Date(o.createdAt).toLocaleDateString()}</td>
                     <td>
-                      <button onClick={() => window.open(`/admin/order/${o._id}`, '_blank')}>View Details</button>
+                      <button onClick={() => handleDeleteOrder(o._id)} className="danger">Delete</button>
                     </td>
                   </tr>
                 ))}

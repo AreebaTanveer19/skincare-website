@@ -4,10 +4,13 @@ import { motion } from 'framer-motion';
 import './Home.css';
 import Navbar from './Navbar';
 
+// Helper to get correct image URL for GitHub Pages
+const getImageUrl = (img) => `${import.meta.env.BASE_URL}images/${img.replace(/^\/images\//, '')}`;
+
 const products = [
-  { name: 'Radiance Serum', desc: 'Brightens and revitalizes skin.', img: '/images/h1.jpeg', category: 'Serums' },
-  { name: 'Hydra Cream', desc: 'Deep hydration for a dewy glow.', img: '/images/h2.jpeg', category: 'Creams' },
-  { name: 'Botanical Cleanser', desc: 'Gentle, natural cleansing.', img: '/images/h3.jpeg', category: 'Cleansers' },
+  { name: 'Radiance Serum', desc: 'Brightens and revitalizes skin.', img: 'h1.jpeg', category: 'Serums' },
+  { name: 'Hydra Cream', desc: 'Deep hydration for a dewy glow.', img: 'h2.jpeg', category: 'Creams' },
+  { name: 'Botanical Cleanser', desc: 'Gentle, natural cleansing.', img: 'h3.jpeg', category: 'Cleansers' },
 ];
 
 
@@ -60,13 +63,13 @@ export default function Home() {
           <p className="tagline">Elevate Your Glow. Embrace Your Radiance.</p>
           <a href="#about" className="cta-btn">Discover More</a>
         </motion.div>
-        <img src="/images/skincare.jpg" alt="Luxury skincare" className="hero-bg" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080" />
+        <img src={getImageUrl('skincare.jpg')} alt="Luxury skincare" className="hero-bg" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1080" />
       </section>
 
       {/* About Us */}
       <section className="about" id="about">
         <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="about-content">
-          <img src="/images/about.jpeg" alt="About us" className="about-img" loading="eager" />
+          <img src={getImageUrl('about.jpeg')} alt="About us" className="about-img" loading="eager" />
           <div>
             <h2>About Us</h2>
             <p>
@@ -86,7 +89,7 @@ export default function Home() {
       className="product-card"
       whileHover={{ scale: 1.05, boxShadow: '0 8px 32px rgba(212,175,55,0.15)' }}
     >
-      <img src={p.img} alt={p.name} loading="lazy" />
+      <img src={getImageUrl(p.img)} alt={p.name} loading="lazy" />
       <h3>{p.name}</h3>
       <p>{p.desc}</p>
       <button
