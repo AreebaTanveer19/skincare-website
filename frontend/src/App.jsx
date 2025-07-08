@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import AdminDashboard from './pages/AdminDashboard';
 import ScrollToTop from './pages/ScrollToTop';
 import Chatbot from "./component/Chatbot";
+import Orders from './pages/Orders';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -38,6 +39,7 @@ function App() {
         <Route path="/about" element={<><Navbar /><About /><Chatbot /></>} />
         <Route path="/auth" element={<><Navbar /><Auth /></>} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
     </Router>
   );

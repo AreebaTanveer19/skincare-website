@@ -53,11 +53,14 @@ export default function Navbar() {
           <Link to="/product" onClick={() => setMenuOpen(false)}>Products</Link>
           <Link to="/checkout" onClick={() => setMenuOpen(false)}>Checkout</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About us</Link>
+          {isLoggedIn && (
+            <Link to="/orders" onClick={() => setMenuOpen(false)}>Orders</Link>
+          )}
           {!isLoggedIn && (
             <Link to="/auth" className="signin-link" onClick={() => setMenuOpen(false)}>Sign-in</Link>
           )}
           {isLoggedIn && location.pathname !== '/auth' && (
-            <button onClick={handleLogout} className="logout-btn" style={{ marginLeft: '1rem' }}>Logout</button>
+            <button onClick={handleLogout} className="signin-link logout-btn" style={{ marginLeft: '1rem' }}>Logout</button>
           )}
         </nav>
       </div>

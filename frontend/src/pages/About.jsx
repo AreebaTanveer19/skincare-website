@@ -76,7 +76,7 @@ export default function About() {
               Our journey is guided by purpose, powered by passion. Every bottle is a testament to purity, care, and a belief in radiant skin for all.
             </p>
             <a
-              href="/about"
+              href="/skincare-website/about"
               className="aboutus-cta-btn"
             >
               Learn More About Our Philosophy
