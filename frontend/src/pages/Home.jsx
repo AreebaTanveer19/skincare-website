@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Home.css';
 import Navbar from './Navbar';
+import { AnimatePresence } from 'framer-motion';
 
 // Helper to get correct image URL for GitHub Pages
 const getImageUrl = (img) => `${import.meta.env.BASE_URL}images/${img.replace(/^\/images\//, '')}`;
@@ -13,7 +14,6 @@ const products = [
   { name: 'Botanical Cleanser', desc: 'Gentle, natural cleansing.', img: 'h3.jpeg', category: 'Cleansers' },
 ];
 
-
 const testimonials = [
   { name: 'Sophia L.', text: 'My skin has never felt so luxurious and healthy!' },
   { name: 'Emma R.', text: 'The botanical cleanser is a game changer.' },
@@ -21,9 +21,9 @@ const testimonials = [
 ];
 
 const tips = [
-  { step: 'Cleanse', desc: 'Start with a gentle botanical cleanser.' },
-  { step: 'Serum', desc: 'Apply radiance serum for glow.' },
-  { step: 'Moisturize', desc: 'Lock in hydration with our cream.' },
+  { step: 'Cleanse', desc: 'Start with a gentle botanical cleanser.', img: 'cleanser1.jpg' },
+  { step: 'Serum', desc: 'Apply radiance serum for glow.', img: 'serum1.jpg' },
+  { step: 'Moisturize', desc: 'Lock in hydration with our cream.', img: 'most1.jpg' },
 ];
 
 export default function Home() {
@@ -31,8 +31,23 @@ export default function Home() {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [currentTip, setCurrentTip] = useState(0); // For auto-slider
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 600);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const interval = setInterval(() => {
+      setCurrentTip((prev) => (prev + 1) % tips.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isMobile]);
 
   const handleTipToggle = idx => setTipOpen(tipOpen === idx ? null : idx);
   const handleTestimonial = dir => {
@@ -68,13 +83,21 @@ export default function Home() {
 
       {/* About Us */}
       <section className="about" id="about">
-        <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="about-content">
+        <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="about-content redesigned">
           <img src={getImageUrl('about.jpeg')} alt="About us" className="about-img" loading="eager" />
-          <div>
-            <h2>About Us</h2>
-            <p>
-              At Luminaire Skin, we blend nature and science to create luxurious skincare rituals. Our products are crafted with botanical extracts and advanced actives for radiant, healthy skin.
-            </p>
+          <div className="about-details-text-wrapper">
+            <div className="about-details">
+              <h2>About Us</h2>
+              <div className="about-highlight">
+                <p>
+                  <b>Luminaire Skin</b> is more than just skincare—it's a celebration of self-care, science, and sustainability. Our journey began with a simple belief: everyone deserves radiant, healthy skin powered by nature and proven by science.
+                </p>
+                <blockquote className="about-quote">“We believe beauty is a ritual, not a routine.”</blockquote>
+              </div>
+              <p className="about-extra">
+                Join us on a journey where skincare is mindful, luxurious, and always honest. Discover the Luminaire difference—where every product is a promise to your skin and the planet.
+              </p>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -107,28 +130,75 @@ export default function Home() {
       {/* Skincare Tips / Routine Guide */}
       <section className="tips" id="tips">
         <h2>Skincare Routine</h2>
-        <div className="tip-accordion">
-          {tips.map((tip, idx) => (
-            <div key={tip.step} className={`tip-item${tipOpen === idx ? ' open' : ''}`}> 
-              <button className="tip-title" onClick={() => handleTipToggle(idx)}>{tip.step}</button>
-              <motion.div initial={false} animate={{ height: tipOpen === idx ? 'auto' : 0, opacity: tipOpen === idx ? 1 : 0 }} className="tip-desc">
-                <p>{tip.desc}</p>
-              </motion.div>
-            </div>
-          ))}
+        <div className="tip-cards-wrapper">
+          {isMobile ? (
+            <>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTip}
+                  className="tip-card"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="tip-card-number-circle">{currentTip + 1}</span>
+                  {tips[currentTip].img ? (
+                    <img src={getImageUrl(tips[currentTip].img)} alt={tips[currentTip].step} className="tip-card-img-placeholder" />
+                  ) : (
+                    <div className="tip-card-img-placeholder">Image</div>
+                  )}
+                  <h3 className="tip-card-title">{tips[currentTip].step}</h3>
+                  <p className="tip-card-desc">{tips[currentTip].desc}</p>
+                </motion.div>
+              </AnimatePresence>
+              <div className="tip-slider-dots">
+                {tips.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`tip-slider-dot${currentTip === idx ? ' active' : ''}`}
+                    onClick={() => setCurrentTip(idx)}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            tips.map((tip, idx) => (
+              <div key={tip.step} className="tip-card">
+                <span className="tip-card-number-circle">{idx + 1}</span>
+                {tip.img ? (
+                  <img src={getImageUrl(tip.img)} alt={tip.step} className="tip-card-img-placeholder" />
+                ) : (
+                  <div className="tip-card-img-placeholder">Image</div>
+                )}
+                <h3 className="tip-card-title">{tip.step}</h3>
+                <p className="tip-card-desc">{tip.desc}</p>
+              </div>
+            ))
+          )}
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="testimonials" id="testimonials">
         <h2>Testimonials</h2>
-        <div className="testimonial-slider">
-          <button className="slider-btn" onClick={() => handleTestimonial(-1)}>&lt;</button>
-          <motion.div key={testimonialIdx} initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="testimonial-card">
-            <p>"{testimonials[testimonialIdx].text}"</p>
-            <span>- {testimonials[testimonialIdx].name}</span>
-          </motion.div>
-          <button className="slider-btn" onClick={() => handleTestimonial(1)}>&gt;</button>
+        <div className="testimonial-slider-modern">
+          <button className="slider-btn" onClick={() => handleTestimonial(-1)} aria-label="Previous testimonial">&lt;</button>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={testimonialIdx}
+              className="testimonial-card-modern"
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+            >
+              <span className="testimonial-quote-icon">“</span>
+              <p className="testimonial-text">{testimonials[testimonialIdx].text}</p>
+              <span className="testimonial-user">- {testimonials[testimonialIdx].name}</span>
+            </motion.div>
+          </AnimatePresence>
+          <button className="slider-btn" onClick={() => handleTestimonial(1)} aria-label="Next testimonial">&gt;</button>
         </div>
       </section>
 

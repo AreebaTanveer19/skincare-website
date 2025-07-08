@@ -1,69 +1,126 @@
-#about {
-  background-color: #f8f6f2;
-  padding: 3.5rem 1.5rem 4rem;
-  margin-top: 96px; /* Exact navbar height for desktop */
-  scroll-margin-top: 96px;
+/* About Us Page Modern Styling with Unique Selectors */
+#aboutus-section {
+  margin-top: 100px;
+  margin-bottom: 10px;
+  background: #fff;
+  min-height: 100vh;
+  padding: 4rem 0 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  width: 95vw;
 }
-
-@media (max-width: 900px) {
-  #about {
-    margin-top: 70px;
-    scroll-margin-top: 70px;
-  }
+.aboutus-container {
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(212,175,55,0.13), 0 2px 8px rgba(183,198,176,0.08);
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  max-width: 900px;
+  width: 95vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-@media (max-width: 768px) {
-  #about {
-    margin-top: 60px;
-    scroll-margin-top: 60px;
-  }
-}
-
-#about h2,
-#about h3 {
+.aboutus-title {
   font-family: 'Playfair Display', serif;
-  color: #2d2d2d;
+  font-size: 2.7rem;
+  color: var(--gold, #d4af37);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
-
-#about p {
-  color: #6b6b6b;
-  line-height: 1.7;
+.aboutus-divider {
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold, #d4af37), var(--rose-gold, #b76e79));
+  border-radius: 2px;
+  margin: 0 auto 2rem auto;
 }
-
-#about .text-center {
+.aboutus-intro {
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
   text-align: center;
 }
-
-#about .gradient-box {
-  background: linear-gradient(to right, #fff8ec, #f0e8dc);
-  padding: 2.5rem;
-  border-radius: 1rem;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.03);
-  margin-top: 3rem;
+.aboutus-intro-text {
+  color: #6b6b6b;
+  font-size: 1.13rem;
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
 }
-
-#about .core-values {
+.aboutus-highlight {
+  background: linear-gradient(90deg, #fff8ec 60%, #f0e8dc 100%);
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(212,175,55,0.06);
+  padding: 1.2rem 1.5rem 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+}
+.aboutus-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #2d2d2d;
+  margin-bottom: 0.7rem;
+  text-align: center;
+}
+.aboutus-highlight-text {
+  color: #6b6b6b;
+  font-size: 1.13rem;
+  line-height: 1.8;
+  margin-bottom: 0.7rem;
+}
+.aboutus-corevalues {
+  margin: 2.5rem auto 0 auto;
+  max-width: 900px;
+  width: 100%;
+}
+.aboutus-corevalues-grid {
   display: grid;
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   text-align: center;
 }
-
-#about .core-values h4 {
+.aboutus-core-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.aboutus-core-icon svg {
+  color: var(--gold, #d4af37);
+  stroke: var(--gold, #d4af37);
+}
+.aboutus-core-title {
   margin-top: 1rem;
   color: #2d2d2d;
   font-weight: 600;
+  font-size: 1.1rem;
 }
-
-#about .core-values p {
-  font-size: 0.9rem;
+.aboutus-core-desc {
+  font-size: 0.98rem;
   margin-top: 0.5rem;
+  color: #6b6b6b;
 }
-
-#about .cta-btn {
+.aboutus-extra {
+  color: var(--text-light, #6b6b6b);
+  font-size: 1.13rem;
   margin-top: 2.5rem;
+  text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.aboutus-extra-text {
+  color: #6b6b6b;
+  font-size: 1.13rem;
+  margin-bottom: 1.2rem;
+}
+.aboutus-cta-btn {
   display: inline-block;
+  margin-top: 1.5rem;
   padding: 0.75rem 2rem;
   font-weight: 500;
   color: white;
@@ -72,8 +129,44 @@
   text-decoration: none;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 1.08rem;
 }
-
-#about .cta-btn:hover {
+.aboutus-cta-btn:hover {
   transform: scale(1.05);
+}
+@media (max-width: 900px) {
+  #aboutus-section {
+    margin-top: 70px;
+  }
+  .aboutus-container {
+    padding: 2rem 1rem 1.5rem 1rem;
+  }
+  .aboutus-title {
+    font-size: 2.1rem;
+  }
+  .aboutus-subtitle {
+    font-size: 1.3rem;
+  }
+}
+@media (max-width: 600px) {
+  #aboutus-section {
+    margin-top: 60px;
+    padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+  }
+  .aboutus-container {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    border-radius: 1.1rem;
+  }
+  .aboutus-title {
+    font-size: 1.5rem;
+  }
+  .aboutus-divider {
+    width: 36px;
+    height: 3px;
+    margin-bottom: 1.2rem;
+  }
+  .aboutus-corevalues-grid {
+    gap: 1rem;
+    margin-top: 1rem;
+  }
 }

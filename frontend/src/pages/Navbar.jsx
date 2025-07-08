@@ -30,7 +30,9 @@ export default function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-container">
-        <h1 className="logo">LUMINAIRE</h1>
+        <h1 className="logo">
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>LUMINAIRE</Link>
+        </h1>
         <button
           className={`hamburger${menuOpen ? ' open' : ''}`}
           aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -52,7 +54,7 @@ export default function Navbar() {
           <Link to="/checkout" onClick={() => setMenuOpen(false)}>Checkout</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About us</Link>
           {!isLoggedIn && (
-            <Link to="/auth" onClick={() => setMenuOpen(false)}>Sign-in</Link>
+            <Link to="/auth" className="signin-link" onClick={() => setMenuOpen(false)}>Sign-in</Link>
           )}
           {isLoggedIn && location.pathname !== '/auth' && (
             <button onClick={handleLogout} className="logout-btn" style={{ marginLeft: '1rem' }}>Logout</button>

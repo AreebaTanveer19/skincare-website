@@ -73,7 +73,7 @@ export default function Auth() {
           <span role="img" aria-label="leaf">🌿</span>
         </div>
         <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
-        <p>{isLogin ? 'Welcome back! Please login to your account.' : 'Join our skincare community. Create your account below.'}</p>
+        <p>{isLogin ? 'Welcome back to LUMINAIRE SKIN! Please login to your account.' : 'Join our skincare community. Create your account below.'}</p>
         {error && <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
         {success && <div className="success-message" style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
