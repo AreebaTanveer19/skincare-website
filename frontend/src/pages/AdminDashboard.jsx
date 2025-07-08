@@ -109,6 +109,13 @@ export default function AdminDashboard() {
     fetchOrders();
   };
 
+  // Helper to get correct image URL for GitHub Pages
+  const getImageUrl = (img) => {
+    if (!img) return '';
+    const fileName = img.split('/').pop();
+    return `${import.meta.env.BASE_URL}images/${fileName}`;
+  };
+
   if (!checked) return null;
   if (forceLogin) return <AdminLogin onLogin={() => { setIsAdmin(true); setForceLogin(false); }} />;
   if (!isAdmin) return (
@@ -218,11 +225,7 @@ export default function AdminDashboard() {
                         {o.items.map((item, index) => (
                           <div key={index} className="order-item">
                             <img
-                              src={
-                                item.image
-                                  ? (item.image.startsWith('/images/') ? item.image : `/images/${item.image.split('/').pop()}`)
-                                  : '/images/default.jpg'
-                              }
+                              src={item.image ? getImageUrl(item.image) : getImageUrl('default.jpg')}
                               alt={item.name}
                               className="item-image"
                             />
