@@ -44,6 +44,8 @@ export default function Auth() {
         const result = await res.json();
         if (!res.ok) throw new Error(result.error || 'Login failed');
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(result.user));
+        if (result.token) localStorage.setItem('token', result.token);
         setSuccess('Login successful! Redirecting...');
         setTimeout(() => navigate('/'), 1200); // Redirect after 1.2s
       } else {

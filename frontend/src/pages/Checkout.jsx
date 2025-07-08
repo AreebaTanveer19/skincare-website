@@ -6,6 +6,13 @@ import './Checkout.css';
 import Navbar from './Navbar';
 import { FaTrash } from 'react-icons/fa';
 
+// Helper to get correct image URL for GitHub Pages
+const getImageUrl = (img) => {
+  if (!img) return '';
+  const fileName = img.split('/').pop();
+  return `${import.meta.env.BASE_URL}images/${fileName}`;
+};
+
 export default function Checkout({ cartItems, setCartItems }) {
   const [shippingMethod, setShippingMethod] = useState('standard');
   const [paymentMethod, setPaymentMethod] = useState('card');
@@ -102,7 +109,7 @@ export default function Checkout({ cartItems, setCartItems }) {
           <h2>Cart Summary</h2>
           {cartItems.map(item => (
             <div className="cart-item" key={item.id}>
-              <img src={item.image} alt={item.name} />
+              <img src={getImageUrl(item.image)} alt={item.name} />
               <div>
                 <p>{item.name} ({item.variant})</p>
                 <p>${item.price.toFixed(2)}</p>
