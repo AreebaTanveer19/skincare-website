@@ -8,7 +8,24 @@ const admin = require('../middleware/admin');
 router.post('/', async (req, res) => {
   try {
     const { user, items, total, shippingAddress, shippingMethod, paymentMethod } = req.body;
-    
+    const Product = require('../models/Product');
+
+    // Check stock for each item
+    for (const item of items) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return res.status(400).json({ message: `Product not found: ${item.name}` });
+      }
+      if (product.quantity < item.quantity) {
+        return res.status(400).json({ message: `Not enough stock for ${product.name}. Only ${product.quantity} left.` });
+      }
+    }
+
+    // Decrement stock for each item
+    for (const item of items) {
+      await Product.findByIdAndUpdate(item.product, { $inc: { quantity: -item.quantity } });
+    }
+
     const order = new Order({ 
       user, 
       items, 
@@ -17,7 +34,6 @@ router.post('/', async (req, res) => {
       shippingMethod, 
       paymentMethod 
     });
-    
     await order.save();
     res.status(201).json(order);
   } catch (error) {

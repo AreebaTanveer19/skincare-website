@@ -29,6 +29,11 @@ router.get('/:id', async (req, res) => {
 // Create product (admin only)
 router.post('/', admin, async (req, res) => {
   try {
+    // Ensure quantity is a number if present
+    if (req.body.quantity !== undefined) {
+      req.body.quantity = Number(req.body.quantity);
+      if (isNaN(req.body.quantity)) req.body.quantity = 0;
+    }
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.status(201).json(newProduct);
@@ -40,6 +45,10 @@ router.post('/', admin, async (req, res) => {
 // Update product (admin only)
 router.put('/:id', admin, async (req, res) => {
   try {
+    if (req.body.quantity !== undefined) {
+      req.body.quantity = Number(req.body.quantity);
+      if (isNaN(req.body.quantity)) req.body.quantity = 0;
+    }
     const updated = await Product.findByIdAndUpdate(
       req.params.id, 
       req.body, 
