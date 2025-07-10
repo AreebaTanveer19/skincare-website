@@ -60,7 +60,7 @@ export default function Navbar() {
           <Link to="/checkout" onClick={() => setMenuOpen(false)}>Checkout</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About us</Link>
           {isLoggedIn && (
-            <Link to="/orders" onClick={() => setMenuOpen(false)}>My Orders</Link>
+            <Link to="/myorders" onClick={() => setMenuOpen(false)}>My Orders</Link>
           )}
           {!isLoggedIn && (
             <Link to="/auth" className="signin-link" onClick={() => setMenuOpen(false)}>Sign-in</Link>

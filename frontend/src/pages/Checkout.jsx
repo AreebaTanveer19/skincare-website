@@ -201,7 +201,7 @@ export default function Checkout({ cartItems, setCartItems }) {
           <div className="confirmation-box">
             <h3>Thank You for Your Order!</h3>
             <p>Your skincare products are on their way. You'll receive them shortly.</p>
-            <button onClick={() => { setOrderPlaced(false); navigate('/orders'); }} className="close-confirmation">
+            <button onClick={() => { setOrderPlaced(false); navigate('/myorders'); }} className="close-confirmation">
               Close
             </button>
           </div>

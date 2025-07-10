@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Orders.css';
+import './MyOrders.css';
 
 const statusIcons = {
   delivered: '✔️',
@@ -18,7 +18,7 @@ const getImageUrl = (img) => {
   return `${import.meta.env.BASE_URL}images/${fileName}`;
 };
 
-export default function Orders() {
+export default function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -34,7 +34,7 @@ export default function Orders() {
     }
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`/api/orders/user/${userId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/myorders/user/${userId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch orders');
         }

@@ -9,7 +9,7 @@ import Auth from "./pages/Auth";
 import AdminDashboard from './pages/AdminDashboard';
 import ScrollToTop from './pages/ScrollToTop';
 import Chatbot from "./component/Chatbot";
-import Orders from './pages/Orders';
+import MyOrders from './pages/MyOrders';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -39,7 +39,7 @@ function App() {
         <Route path="/about" element={<><Navbar /><About /><Chatbot /></>} />
         <Route path="/auth" element={<><Navbar /><Auth /></>} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/orders" element={<><Navbar/><Orders /><Chatbot/></>} />
+        <Route path="/myorders" element={<><Navbar/><MyOrders /><Chatbot/></>} />
       </Routes>
     </Router>
   );
