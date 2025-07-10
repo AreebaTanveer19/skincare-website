@@ -156,6 +156,27 @@
 .product-form input:focus {
   border: 1.5px solid #232946;
 }
+.product-form select {
+  padding: 0.7rem 1rem;
+  border: 1px solid #eebf63;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  background: #f4f6fa;
+  color: #232946;
+  outline: none;
+  transition: border 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-bottom: 0.2rem;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M5.516 7.548a1 1 0 0 1 1.415 0L10 10.617l3.07-3.07a1 1 0 1 1 1.415 1.415l-3.777 3.778a1 1 0 0 1-1.415 0L5.516 8.963a1 1 0 0 1 0-1.415z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2em;
+}
+.product-form select:focus {
+  border: 1.5px solid #232946;
+}
 .form-actions {
   display: flex;
   gap: 1rem;
@@ -240,6 +261,57 @@
 .status-select:focus {
   outline: none;
   border-color: #232946;
+}
+
+.admin-search-bar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 2rem auto;
+  position: relative;
+}
+
+.admin-search-bar {
+  padding: 0.7rem 1.2rem 0.7rem 2.7rem;
+  border-radius: 2rem;
+  border: 2px solid #d4af37;
+  width: 100%;
+  font-size: 1.13rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 2px 12px rgba(212,175,55,0.08);
+  background: #fffdfa;
+  color: #333;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.admin-search-bar:focus {
+  border-color: #b8941f;
+  box-shadow: 0 4px 18px rgba(212,175,55,0.16);
+  background: #fff;
+}
+
+.admin-search-bar::placeholder {
+  color: #d4af37;
+  font-size: 1.08rem;
+  opacity: 1;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.admin-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #d4af37;
+  font-size: 1.3rem;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 @media (max-width: 900px) {

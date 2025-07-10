@@ -9,11 +9,12 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useState([]);
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const [form, setForm] = useState({ name: '', desc: '', price: '', image: '', category: '' });
+  const [form, setForm] = useState({ name: '', desc: '', price: '', image: '', category: '', quantity: 0 });
   const [tab, setTab] = useState('products');
   const [isAdmin, setIsAdmin] = useState(false);
   const [checked, setChecked] = useState(false);
   const [forceLogin, setForceLogin] = useState(true);
+  const [search, setSearch] = useState('');
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -55,24 +56,35 @@ export default function AdminDashboard() {
     e.preventDefault();
     const method = editingProduct ? 'PUT' : 'POST';
     const url = editingProduct ? `${API}/products/${editingProduct._id}` : `${API}/products`;
+
+    // Validate and convert quantity for both add and edit
+    let qty = Number(form.quantity);
+    if (isNaN(qty) || form.quantity === '' || qty < 0) {
+      alert('Please enter a valid quantity (0 or more).');
+      return;
+    }
+
+    const submitForm = { ...form, quantity: qty };
+
     await fetch(url, {
       method,
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token
       },
-      body: JSON.stringify(form)
+      body: JSON.stringify(submitForm)
     });
+
     setShowProductForm(false);
     setEditingProduct(null);
-    setForm({ name: '', desc: '', price: '', image: '', category: '' });
-    fetchProducts();
+    setForm({ name: '', desc: '', price: '', image: '', category: '', quantity: 0 });
+    await fetchProducts(); // Ensure dashboard updates after change
   };
 
   // Edit product
   const handleEdit = product => {
     setEditingProduct(product);
-    setForm({ ...product });
+    setForm({ ...product, quantity: typeof product.quantity === 'number' ? product.quantity : 0 });
     setShowProductForm(true);
   };
 
@@ -147,11 +159,26 @@ export default function AdminDashboard() {
         <header className="admin-header">
           <h1>{tab === 'products' ? 'Manage Products' : 'Track Orders'}</h1>
           {tab === 'products' && (
-            <button className="add-btn" onClick={() => { setShowProductForm(true); setEditingProduct(null); setForm({ name: '', desc: '', price: '', image: '', category: '' }); }}>+ Add Product</button>
+            <button className="add-btn" onClick={() => { setShowProductForm(true); setEditingProduct(null); setForm({ name: '', desc: '', price: '', image: '', category: '', quantity: 0 }); }}>+ Add Product</button>
           )}
         </header>
         {tab === 'products' && (
           <section>
+            <div className="admin-search-bar-wrapper">
+              <span className="admin-search-icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="7"/>
+                  <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Search products by name or category..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="admin-search-bar"
+              />
+            </div>
             {showProductForm && (
               <div className="modal">
                 <form className="product-form" onSubmit={handleSubmit}>
@@ -160,7 +187,27 @@ export default function AdminDashboard() {
                   <input name="desc" placeholder="Description" value={form.desc} onChange={handleChange} />
                   <input name="price" type="number" step="0.01" placeholder="Price" value={form.price} onChange={handleChange} required />
                   <input name="image" placeholder="Image URL" value={form.image} onChange={handleChange} />
-                  <input name="category" placeholder="Category" value={form.category} onChange={handleChange} />
+                  {/* Replace this input with a dropdown for category */}
+                  <select
+                    name="category"
+                    value={form.category}
+                    onChange={e => setForm({ ...form, category: e.target.value })}
+                    required
+                  >
+                    <option value="" disabled>Select Category</option>
+                    <option value="Serums">Serums</option>
+                    <option value="Creams">Creams</option>
+                    <option value="Cleansers">Cleansers</option>
+                  </select>
+                  <input
+                    name="quantity"
+                    type="number"
+                    min="0"
+                    placeholder="Quantity"
+                    value={form.quantity}
+                    onChange={e => setForm({ ...form, quantity: e.target.value === '' ? 0 : Number(e.target.value) })}
+                    required
+                  />
                   <div className="form-actions">
                     <button type="submit">{editingProduct ? 'Update' : 'Create'}</button>
                     <button type="button" onClick={() => { setShowProductForm(false); setEditingProduct(null); }}>Cancel</button>
@@ -175,22 +222,29 @@ export default function AdminDashboard() {
                   <th>Description</th>
                   <th>Price</th>
                   <th>Category</th>
+                  <th>Quantity</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {products.map(p => (
-                  <tr key={p._id}>
-                    <td>{p.name}</td>
-                    <td>{p.desc}</td>
-                    <td>${p.price}</td>
-                    <td>{p.category}</td>
-                    <td>
-                      <button onClick={() => handleEdit(p)} style={{ marginRight: '0.5rem' }}>Edit</button>
-                      <button onClick={() => handleDelete(p._id)} className="danger">Delete</button>
-                    </td>
-                  </tr>
-                ))}
+                {products
+                  .filter(p =>
+                    p.name.toLowerCase().includes(search.toLowerCase()) ||
+                    (p.category && p.category.toLowerCase().includes(search.toLowerCase()))
+                  )
+                  .map(p => (
+                    <tr key={p._id}>
+                      <td>{p.name}</td>
+                      <td>{p.desc}</td>
+                      <td>${p.price}</td>
+                      <td>{p.category}</td>
+                      <td>{p.quantity ?? 0}</td>
+                      <td>
+                        <button onClick={() => handleEdit(p)} style={{ marginRight: '0.5rem' }}>Edit</button>
+                        <button onClick={() => handleDelete(p._id)} className="danger">Delete</button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </section>

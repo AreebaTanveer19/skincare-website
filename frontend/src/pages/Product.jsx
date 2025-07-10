@@ -141,6 +141,9 @@ export default function Product({ addToCart }) {
                 <img src={getImageUrl(product.image)}
                      alt={product.name}
                      className="product-image" />
+                {product.quantity === 0 && (
+                  <div className="sold-out-badge">Sold Out</div>
+                )}
                 <h2>{product.name}</h2>
                 <span className="product-price">${product.price}</span>
                 <p className="product-desc">{product.desc}</p>
@@ -156,16 +159,20 @@ export default function Product({ addToCart }) {
             <motion.div className="product-modal" initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 80, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 30 }}>
               <button className="modal-close" onClick={() => setModalProduct(null)}>&times;</button>
               <img src={getImageUrl(modalProduct.image)} alt={modalProduct.name} />
+              {modalProduct.quantity === 0 && (
+                <div className="sold-out-badge" style={{margin:'0.5rem auto 0.7rem auto'}}>Sold Out</div>
+              )}
               <h2>{modalProduct.name}</h2>
               <span className="modal-price">${modalProduct.price}</span>
               <p className="modal-desc">{modalProduct.desc}</p>
-              
               <motion.button
                 className={`add-cart-btn${cartAnim ? ' anim' : ''}`}
                 whileTap={{ scale: 0.96 }}
                 onClick={handleAddToCart}
+                disabled={modalProduct.quantity === 0}
+                style={modalProduct.quantity === 0 ? {background:'#ccc', color:'#fff', cursor:'not-allowed'} : {}}
               >
-                {cartAnim ? 'Added!' : 'Add to Cart'}
+                {modalProduct.quantity === 0 ? 'Sold Out' : (cartAnim ? 'Added!' : 'Add to Cart')}
               </motion.button>
             </motion.div>
           </motion.div>

@@ -236,6 +236,24 @@
   color: var(--gold);
 }
 
+.sold-out-badge {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #d4af37 60%, #b76e79 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.3em 1.1em;
+  border-radius: 1.2em;
+  box-shadow: 0 2px 8px rgba(212,175,55,0.10);
+  letter-spacing: 1px;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
 @media (max-width: 900px) {
   .product-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

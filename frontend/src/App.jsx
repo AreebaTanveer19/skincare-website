@@ -39,7 +39,7 @@ function App() {
         <Route path="/about" element={<><Navbar /><About /><Chatbot /></>} />
         <Route path="/auth" element={<><Navbar /><Auth /></>} />
         <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/orders" element={<><Navbar/><Orders /><Chatbot/></>} />
       </Routes>
     </Router>
   );

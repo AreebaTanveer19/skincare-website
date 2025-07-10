@@ -14,6 +14,11 @@ export default function Navbar() {
     // Listen for login/logout changes from other tabs/windows
     const handleStorage = () => setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     window.addEventListener('storage', handleStorage);
+    // If there is no user in localStorage, ensure isLoggedIn is false
+    const user = localStorage.getItem('user');
+    if (!user) {
+      localStorage.removeItem('isLoggedIn');
+    }
     return () => window.removeEventListener('storage', handleStorage);
   }, [location]);
 
@@ -23,6 +28,7 @@ export default function Navbar() {
   const handleLogout = () => {
     // Simulate logout (no token to remove)
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('user');
     setIsLoggedIn(false);
     navigate('/auth', { state: { logout: true } });
   };
@@ -54,7 +60,7 @@ export default function Navbar() {
           <Link to="/checkout" onClick={() => setMenuOpen(false)}>Checkout</Link>
           <Link to="/about" onClick={() => setMenuOpen(false)}>About us</Link>
           {isLoggedIn && (
-            <Link to="/orders" onClick={() => setMenuOpen(false)}>Orders</Link>
+            <Link to="/orders" onClick={() => setMenuOpen(false)}>My Orders</Link>
           )}
           {!isLoggedIn && (
             <Link to="/auth" className="signin-link" onClick={() => setMenuOpen(false)}>Sign-in</Link>
