@@ -1,33 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@400;500&display=swap');
 .orders-container {
   padding-top: 6rem;
   min-height: 80vh;
   background: linear-gradient(135deg, #fffbe6 0%, #f7f3e9 100%);
+  padding-bottom: 10rem !important; /* Even more space for chatbot */
 }
 
 .orders-header {
   text-align: center;
   margin-bottom: 2.5rem;
-  color: #333;
+  color: #d4af37;
   font-size: 2.4rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 8px rgba(212,175,55,0.10);
 }
 
 .orders-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 2.2rem;
   justify-content: center;
+  gap: 2rem;
   padding: 0 1rem;
+  margin-bottom: 10rem !important; /* Even more space for chatbot */
 }
 
 .order-card {
   background: #fff;
   border-radius: 1.2rem;
-  padding: 1.7rem 1.3rem 1.2rem 1.3rem;
-  min-width: 320px;
-  max-width: 350px;
+  padding: 1.2rem 0.8rem 1rem 0.8rem;
+  min-width: 220px;
+  max-width: 270px;
+  width: 100%;
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
   box-shadow: 0 4px 24px rgba(212, 175, 55, 0.10);
@@ -37,10 +42,14 @@
   align-items: flex-start;
   position: relative;
   overflow: hidden;
+  margin: 0 ;
+  font-family: 'Montserrat', Arial, sans-serif;
+  animation: fadeInOrderCard 0.7s cubic-bezier(.4,0,.2,1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 .order-card:hover {
-  box-shadow: 0 12px 36px rgba(212, 175, 55, 0.18);
-  transform: translateY(-6px) scale(1.025);
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(212,175,55,0.13);
 }
 .order-id {
   font-weight: bold;
@@ -48,6 +57,7 @@
   font-size: 1.15rem;
   color: #333;
   letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
 }
 .order-status {
   margin-bottom: 0.5rem;
@@ -82,11 +92,12 @@
 }
 .gold-divider {
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #fff 0%, #d4af37 50%, #fff 100%);
+  height: 4px;
+  background: linear-gradient(90deg, #fff 0%, #d4af37 20%, #FFD700 50%, #b8941f 80%, #fff 100%);
+  box-shadow: 0 0 8px 2px #ffe06633;
   border: none;
   margin: 1.2rem 0 1.1rem 0;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 .view-details-btn {
   margin-top: auto;
@@ -188,6 +199,22 @@
   vertical-align: middle;
   background: #faf7f0;
 }
+.order-card img.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  border: 1.5px solid #f3e7c3;
+  background: #faf7f0;
+}
+.modal-items-list img.product-image {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 1.5px solid #f3e7c3;
+  background: #faf7f0;
+}
 
 /* Loading and Error States */
 .loading-container,
@@ -246,6 +273,11 @@
   color: #dc3545;
 }
 
+@keyframes fadeInOrderCard {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @media (max-width: 768px) {
   .orders-header {
     font-size: 1.3rem;
@@ -257,5 +289,19 @@
   .modal-content {
     min-width: 90vw;
     padding: 1.2rem;
+  }
+}
+@media (max-width: 600px) {
+  .orders-container {
+    padding-bottom: 13rem !important;
+  }
+  .orders-grid {
+    margin-bottom: 13rem !important;
+    gap: 1rem;
+  }
+  .order-card {
+    min-width: 90vw;
+    max-width: 95vw;
+    padding: 0.8rem 0.4rem 0.7rem 0.4rem;
   }
 } 

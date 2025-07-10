@@ -55,6 +55,17 @@ export default function Navbar() {
           className={`nav-links${menuOpen ? ' open' : ''}`}
           role="navigation"
         >
+          {/* Close button for mobile menu */}
+          {menuOpen && (
+            <button
+              className="close-menu"
+              aria-label="Close menu"
+              onClick={() => setMenuOpen(false)}
+              style={{ position: 'absolute', top: 18, right: 18, fontSize: '2rem', background: 'none', border: 'none', zIndex: 2001 }}
+            >
+              &times;
+            </button>
+          )}
           <Link to="/home" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/product" onClick={() => setMenuOpen(false)}>Products</Link>
           <Link to="/checkout" onClick={() => setMenuOpen(false)}>Checkout</Link>

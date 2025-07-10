@@ -34,7 +34,7 @@
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.2rem;
   align-items: center;
 }
 .nav-links a, .nav-links .logout-btn {
@@ -176,6 +176,19 @@
   background: #000;
 }
 
+.close-menu {
+  display: block;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #232946;
+  z-index: 2001;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
@@ -197,14 +210,14 @@
   .nav-links {
     display: none;
     position: fixed;
-    top: 60px;
+    top: 30px;
     right: 0;
     width: 70vw;
     max-width: 320px;
     height: calc(100vh - 60px);
     background: #fff;
     flex-direction: column;
-    gap: 2rem;
+    gap: 0.7rem;
     padding: 2.5rem 2rem;
     box-shadow: -2px 0 16px rgba(0,0,0,0.08);
     z-index: 1000;
@@ -218,7 +231,7 @@
     opacity: 1;
   }
   .nav-links.open a {
-    padding: 1.1rem 0;
+    padding: 0.1rem 0;
     font-size: 1.15rem;
     border-radius: 0.7rem;
     text-align: left;
@@ -227,6 +240,16 @@
   .nav-links.open a:active {
     background: var(--soft-grey);
     color: var(--rose-gold);
+  }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+    padding-bottom: 1rem;
+  }
+  .nav-links.open {
+    gap: 0.2rem;
   }
 }
 
